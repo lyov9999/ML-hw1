@@ -12,7 +12,7 @@ def linear_regression(X: np.ndarray, Y: np.ndarray) -> np.ndarray:
     """
     X_transpose = X.T 
     w = inv(X_transpose.dot(X)).dot(X_transpose).dot(Y)
-    print(w) 
+    return w 
 
 
 linear_regression(np.array([[1, 1], [1, 6]]), np.array([1, 2]))
