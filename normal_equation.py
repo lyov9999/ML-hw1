@@ -1,5 +1,5 @@
 import numpy as np
-
+from numpy.linalg import inv
 
 def linear_regression(X: np.ndarray, Y: np.ndarray) -> np.ndarray:
     """
@@ -10,5 +10,12 @@ def linear_regression(X: np.ndarray, Y: np.ndarray) -> np.ndarray:
     >>> linear_regression(np.array([[1, 1], [1, 6]]), np.array([1, 2]))
     array([0.8, 0.2])
     """
-    w = ... # TODO
-    return w
+    X_transpose = X.T 
+    w = inv(X_transpose.dot(X)).dot(X_transpose).dot(Y)
+    print(w) 
+
+
+linear_regression(np.array([[1, 1], [1, 6]]), np.array([1, 2]))
+
+#array([0.8, 0.2])
+    

@@ -27,8 +27,11 @@ class CustomLinearRegression:
         `b` - vector with shape (1, output_size), initialize with 0s
         """
         np.random.seed(self.random_state)
-        self.W = ...  # TODO
-        self.b = ...  # TODO
+        self.W =  np.zeros(input_size)
+        self.b = 0
+
+        # self.W = ...  # TODO
+        # self.b = ...  # TODO
 
     def fit(self, X: np.ndarray, y: np.ndarray, num_epochs: int = 1000, lr: float = 0.001):
         """Train model linear regression with gradient descent
@@ -51,16 +54,26 @@ class CustomLinearRegression:
             preds = self.predict(X)
             # compute gradients without loops, only use numpy.
             # IMPORTANT don't forget to compute gradients for L2 regularization
-            b_grad = ...  # TODO
-            W_grad = ...  # TODO
-            self.W = ...  # TODO
-            self.b = ...  # TODO
+            b_grad = - ( 2 * np.dot(X.T, (y - preds))) / m
+            W_grad = - 2 * np.sum( y - preds ) / m
+            self.W = self.W - lr*W_grad
+            self.b = self.b - lr*b_grad
+
+            # For L2 regularization
+            self.W = self.C * W_grad
+            self.b = self.C * b_grad
+            
+            # b_grad = ...  # TODO
+            # W_grad = ...  # TODO
+            # self.W = ...  # TODO
+            # self.b = ...  # TODO
 
     def predict(self, X: np.ndarray) -> np.ndarray:
         """
         Do your predictions here :)
         """
-        return ...  # TODO
+        return np.dot(X, self.W) + self.b
+        #return ...  # TODO
 
 
 if __name__ == "__main__":
@@ -69,7 +82,7 @@ if __name__ == "__main__":
     custom_l2 = CustomLinearRegression(C=10, random_state=42)
 
     # TODO also use linear regression without L2, implemented in CustomLinearRegression.
-    custom_lin_reg = ...
+    custom_lin_reg = CustomLinearRegression(C=0, random_state=42)
     lg_sk = lg_sklearn()
     ridge = Ridge(alpha=10)
 
