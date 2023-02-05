@@ -27,8 +27,9 @@ class CustomLinearRegression:
         `b` - vector with shape (1, output_size), initialize with 0s
         """
         np.random.seed(self.random_state)
-        self.W =  np.zeros(input_size)
-        self.b = 0
+        self.W = np.random.normal(loc = 0, scale = 0.01, size = (input_size, output_size))  # TODO
+        self.b = np.zeros(shape = (1,output_size)) # TODO
+     
 
         # self.W = ...  # TODO
         # self.b = ...  # TODO
@@ -54,19 +55,14 @@ class CustomLinearRegression:
             preds = self.predict(X)
             # compute gradients without loops, only use numpy.
             # IMPORTANT don't forget to compute gradients for L2 regularization
-            b_grad = - ( 2 * np.dot(X.T, (y - preds))) / m
-            W_grad = - 2 * np.sum( y - preds ) / m
+            b_grad = (- 2 * np.sum(y - preds)) / m   
+            W_grad = (( - ( 2 * (X.T ).dot( y - preds ) ) +  ( 2 * self.C * self.W ) )) / m     
+
+            
             self.W = self.W - lr*W_grad
             self.b = self.b - lr*b_grad
 
-            # For L2 regularization
-            self.W = self.C * W_grad
-            self.b = self.C * b_grad
-            
-            # b_grad = ...  # TODO
-            # W_grad = ...  # TODO
-            # self.W = ...  # TODO
-            # self.b = ...  # TODO
+        
 
     def predict(self, X: np.ndarray) -> np.ndarray:
         """
